@@ -1,0 +1,43 @@
+html {
+  scroll-behavior: smooth;
+
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: $primary-white-color;
+  color: $primary-text-color;
+  font-family: $primary-font;
+  font-size: 18px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+p,
+h3 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,0 +1,105 @@
+.features {
+  // .features__statistic
+  &__statistic {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: -15px;
+    @media screen and (min-width: $tablet) {
+      width: 450px;
+      margin-left: auto;
+    }
+    @media screen and (min-width: $desktop) {
+      width: 370px;
+    }
+    // .features__statistic-item
+    &-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin: 15px;
+      padding: 20px 0;
+      width: calc((100% - 2 * 30px) / 2);
+      height: 133px;
+      background-color: $primary-bg;
+      text-align: center;
+
+      .count {
+        font-weight: 700;
+        font-size: 42px;
+        line-height: 1.35;
+        transition: all $timming;
+
+        @media screen and (max-width: 260px) {
+          font-size: 24px;
+        }
+        @media screen and (max-width: 199px) {
+          font-size: 12px;
+        }
+        &::after {
+          display: inline-block;
+          content: '+';
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 1.37;
+          color: $accent-color;
+          margin-left: 2px;
+          transform: translateY(-23px);
+          transition: all $timming;
+          @media screen and (max-width: 260px) {
+            transform: translateY(-13px);
+            font-style: 14px;
+          }
+          @media screen and (max-width: 199px) {
+            transform: translateY(-3px);
+            font-style: 12px;
+          }
+        }
+      }
+
+      .text {
+        max-width: 140px;
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 1.36;
+      }
+    }
+
+    // .features__statistic-item:nth-child(2)
+    &-item:nth-child(2) {
+      margin-top: 45px;
+    }
+    // .features__statistic-item:nth-child(3)
+    &-item:nth-child(3) {
+      margin-top: -15px;
+    }
+  }
+  // .features__text
+  &__text {
+    @media screen and (max-width: $desktop) {
+      margin-bottom: 44px;
+      color: $tertiary-text-color;
+    }
+  }
+  // .features__description
+  &__description {
+    @media screen and (min-width: $tablet) {
+      max-width: 500px;
+    }
+    @media screen and (min-width: $desktop) {
+      margin-left: 130px;
+    }
+  }
+  // .features--flex
+  &--flex {
+    @media screen and (min-width: $tablet) {
+      display: flex;
+      flex-direction: column;
+    }
+    @media screen and (min-width: $desktop) {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+  }
+}
