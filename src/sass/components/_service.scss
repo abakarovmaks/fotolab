@@ -14,7 +14,7 @@ $fifth-bg: #090b13;
       rgba($tertiary-bg, 0.8),
       rgba($tertiary-bg, 0.8)
     ),
-    url(../images/price/price-bg-mob.jpg);
+    url(../images/price/foto1.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -27,7 +27,7 @@ $fifth-bg: #090b13;
         rgba($tertiary-bg, 0.8),
         rgba($tertiary-bg, 0.8)
       ),
-      url(../images/price/price-bg-mob@2x.jpg);
+      url(../images/price/foto1.jpg);
   }
 
   @media screen and (min-width: $tablet) {
@@ -37,7 +37,7 @@ $fifth-bg: #090b13;
         rgba($tertiary-bg, 0.8),
         rgba($tertiary-bg, 0.8)
       ),
-      url(../images/price/price-bg-tab.jpg);
+      url(../images/price/foto1.jpg);
 
     @media srceen and (min-device-pixel-ratio: 2),
       screen and (min-resolution: 192dpi),
@@ -47,7 +47,7 @@ $fifth-bg: #090b13;
           rgba($tertiary-bg, 0.8),
           rgba($tertiary-bg, 0.8)
         ),
-        url(../images/price/price-bg-tab@2x.jpg);
+        url(../images/price/foto1.jpg);
     }
   }
 
@@ -58,7 +58,7 @@ $fifth-bg: #090b13;
         rgba($tertiary-bg, 0.8),
         rgba($tertiary-bg, 0.8)
       ),
-      url(../images/price/price-bg-desk.jpg);
+      url(../images/price/foto1.jpg);
 
     @media screen and (min-device-pixel-ratio: 2),
       screen and (min-resolution: 192dpi),
@@ -68,7 +68,7 @@ $fifth-bg: #090b13;
           rgba($tertiary-bg, 0.8),
           rgba($tertiary-bg, 0.8)
         ),
-        url(../images/price/price-bg-desk@2x.jpg);
+        url(../images/price/foto1.jpg);
     }
   }
 
