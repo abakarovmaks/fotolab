@@ -47,6 +47,8 @@
     letter-spacing: 0.05em;
     color: $primary-white-color;
 
+    text-shadow: 3px 1px 7px black, 10px 8px 13px red;
+
     @media screen and (min-width: 1120px) {
       font-size: 72px;
     }
@@ -120,6 +122,8 @@
 .siema {
   width: 100%;
   height: 100%;
+
+  background-color: #191c26;
 }
 
 .siema-buttons {
