@@ -57,7 +57,9 @@
 
   //.hero__subtitle-color
   &__subtitle--color {
-    color: rgba($secondary-text-color, 0.6);
+    // color: rgba($secondary-text-color, 0.6);
+    color: white;
+    text-shadow: 3px 1px 7px black, 10px 8px 13px red;
 
     &::before {
       background-color: rgba($secondary-text-color, 0.6);
@@ -70,7 +72,10 @@
 
     font-size: 16px;
     line-height: 1.6;
-    color: $secondary-text-color;
+    // color: $secondary-text-color;
+
+    color: white;
+    text-shadow: 3px 1px 7px black, 10px 8px 13px red;
 
     @media screen and (min-width: $desktop) {
       font-size: 18px;
