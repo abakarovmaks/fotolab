@@ -101,8 +101,7 @@
   padding-top: 84px;
   padding-bottom: 84px;
 
-  background-image: url(../images/hero/photo-girl.jpg),
-    linear-gradient(to right, #191c26, #191c26);
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/hero/photo-girl2.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -111,23 +110,20 @@
     screen and (min-resolution: 192dpi),
     screen and (min-resolution: 2dppx) {
     & {
-      background-image: url(../images/hero/photo-girl.jpg),
-        linear-gradient(to right, #191c26, #191c26);
+      background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/hero/photo-girl2.jpg);
     }
   }
 
   @media screen and (min-width: $tablet) {
     padding-top: 100px;
     padding-bottom: 100px;
-    background-image: url(../images/hero/photo-girl.jpg),
-      linear-gradient(to right, #191c26, #191c26);
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/hero/photo-girl2.jpg);
 
     @media screen and (min-device-pixel-ratio: 2),
       screen and (min-resolution: 192dpi),
       screen and (min-resolution: 2dppx) {
       & {
-        background-image: url(../images/hero/photo-girl.jpg),
-          linear-gradient(to right, #191c26, #191c26);
+        background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/hero/photo-girl2.jpg);
       }
     }
   }
@@ -137,15 +133,13 @@
     padding-bottom: 130px;
     padding-left: 100px;
     width: 100%;
-    background-image: url(../images/hero/photo-girl.jpg),
-      linear-gradient(to right, #191c26, #191c26);
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/hero/photo-girl2.jpg);
 
     @media screen and (min-device-pixel-ratio: 2),
       screen and (min-resolution: 192dpi),
       screen and (min-resolution: 2dppx) {
       & {
-        background-image: url(../images/hero/photo-girl.jpg),
-          linear-gradient(to right, #191c26, #191c26);
+        background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/hero/photo-girl2.jpg);
       }
     }
   }
@@ -217,9 +211,6 @@
 .contact-second {
   padding-top: 84px;
   padding-bottom: 84px;
-
-  // background-image: url(../images/contacts/png/contact-mob.png),
-  //   linear-gradient(to right, #191c26, #191c26);
 
   background-color: $secondary-bg;
 
@@ -334,7 +325,7 @@
   line-height: 1.67;
   letter-spacing: 0.02em;
 
-  color: $secondary-text-color;
+  color: $primary-white-color;
 }
 
 .secondary {
