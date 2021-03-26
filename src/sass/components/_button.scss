@@ -38,3 +38,12 @@
     }
   }
 }
+
+.button.about-us {
+  color: $secondary-bg;
+
+  &:hover,
+  &:focus {
+    color: $primary-white-color;
+  }
+}
