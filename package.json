@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://abakarovmaks.github.io/fotolab",
+
   "scripts": {
     "dev": "parcel src/*.html",
     "build": "parcel build src/*.html",
-    "predeploy": "npm run build -- --public-url /fotolab/",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "netlify deploy -p"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "sass": "^1.26.9"
   },
   "dependencies": {
+    "netlify-cli": "^3.13.7",
     "siema": "^1.5.1"
   }
 }
