@@ -160,6 +160,13 @@ a {
   color: #ffffff;
 }
 
+.button.about-us, .about-us.button--color {
+  color: #191c26;
+}
+.button.about-us:hover, .about-us.button--color:hover, .button.about-us:focus, .about-us.button--color:focus {
+  color: #ffffff;
+}
+
 .header {
   position: absolute;
   top: 0;
@@ -203,7 +210,7 @@ a {
   .header__mob {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 }
 .header__logo {
@@ -251,14 +258,9 @@ a {
     align-items: center;
     justify-content: space-evenly;
     flex-grow: 1;
-    margin-left: 64px;
+    margin-left: 140px;
     font-size: 12px;
     line-height: 1.33;
-  }
-}
-@media screen and (min-width: 830px) {
-  .header__menu-inner {
-    margin-left: 70px;
   }
 }
 @media screen and (max-width: 767px) {
