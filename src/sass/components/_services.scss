@@ -7,7 +7,7 @@ $fifth-bg: #090b13;
 // Cтили для секции Services
 
 .services {
-  height: 826px;
+  min-height: 826px;
   background-color: $tertiary-bg;
   background-image: linear-gradient(
       to right,
@@ -189,6 +189,26 @@ $fifth-bg: #090b13;
   }
 }
 
+// .container-list {
+//   padding: 30px;
+//   background-color: $fourth-bg;
+//   background: linear-gradient(
+//     to bottom,
+//     rgba($fourth-bg, 1) 0%,
+//     rgba($fourth-bg, 0.2) 100%
+//   );
+//   margin-bottom: 50px;
+
+//   @media screen and (max-width: $mobile - 1px) {
+//   }
+
+//   @media screen and (min-width: $desktop) {
+//     display: flex;
+//     background-color: none;
+//     background: none;
+//     padding: 0;
+//   }
+// }
 .container-list {
   padding: 30px;
   background-color: $fourth-bg;
@@ -198,13 +218,16 @@ $fifth-bg: #090b13;
     rgba($fourth-bg, 0.2) 100%
   );
   margin-bottom: 50px;
+  box-sizing: border-box;
+  width: 100%;
 
   @media screen and (max-width: $mobile - 1px) {
+    padding: 20px;
   }
 
   @media screen and (min-width: $desktop) {
     display: flex;
-    background-color: none;
+    background-color: transparent;
     background: none;
     padding: 0;
   }
