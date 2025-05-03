@@ -114,6 +114,7 @@
       background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url(../images/hero/photo-girl2.jpg);
     }
+    background-size: cover;
   }
 
   @media screen and (min-width: $tablet) {
@@ -139,6 +140,7 @@
     width: 100%;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url(../images/hero/photo-girl2.jpg);
+      background-size: cover;
 
     @media screen and (min-device-pixel-ratio: 2),
       screen and (min-resolution: 192dpi),
@@ -146,6 +148,7 @@
       & {
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
           url(../images/hero/photo-girl2.jpg);
+          background-size: cover;
       }
     }
   }
@@ -200,6 +203,13 @@
     align-items: center;
 
     margin-bottom: 20px;
+
+    transition: color $timming;
+
+    &:hover,
+    &:focus {
+      color: $accent-color;
+    }
 
     //.contact__link-email
     &-email {
