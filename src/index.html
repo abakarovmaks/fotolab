@@ -1,35 +1,706 @@
 <!DOCTYPE html>
-<html lang="ru">
-
+<html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <meta name="description" content="Фотопринтцентр Голосеевского района" />
-  <meta name="theme-color" content="#db5945">
-  <title>Photoprint</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@700&display=swap"
-  rel="stylesheet" />
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/0.6.0/modern-normalize.min.css" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photoprint — Фотодрук твого міста</title>
+<meta name="description" content="Фото на документи, друк фотографій, ксерокопіювання, ламінування, прошивка документів." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --surface3: #1f1f1f;
+    --gold: #d4b460;
+    --gold-dim: rgba(212,180,96,0.15);
+    --gold-border: rgba(212,180,96,0.25);
+    --cream: #f0ece4;
+    --cream-dim: rgba(240,236,228,0.55);
+    --cream-faint: rgba(240,236,228,0.12);
+    --bronze: #8c7a5a;
+    --white-line: rgba(255,255,255,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    position: fixed; width: 10px; height: 10px;
+    background: var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid rgba(212,180,96,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.08s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px);
+    padding: 14px 48px;
+    border-bottom: 0.5px solid var(--white-line);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--cream); text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--cream-dim); text-decoration: none;
+    font-size: 13px; font-weight: 400;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-phone {
+    font-size: 13px; color: var(--cream-dim);
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-phone:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--white-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--white-line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.4;
+  }
+  .hero-bg-glow {
+    position: absolute; top: -200px; right: -100px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212,180,96,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; color: var(--cream);
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.9s 0.35s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-desc {
+    font-size: 16px; color: var(--cream-dim); max-width: 400px;
+    line-height: 1.8; margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-actions {
+    display: flex; align-items: center; gap: 24px;
+    opacity: 0; animation: fadeUp 0.9s 0.65s forwards;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--black);
+    font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 32px; border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #e8c96e; transform: translateY(-2px); }
+  .btn-outline {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--cream-dim); border-bottom: 1px solid var(--bronze);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-outline:hover { color: var(--cream); border-color: var(--cream); }
+
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; animation: fadeIn 1.2s 0.5s forwards;
+  }
+  .hero-img-frame {
+    position: relative;
+    width: 100%; max-width: 480px;
+  }
+  .hero-img-frame img {
+    width: 100%; height: 420px; object-fit: cover;
+    border-radius: 4px; display: block;
+    filter: grayscale(20%) contrast(1.05);
+  }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,180,96,0.08) 0%, transparent 60%);
+    border-radius: 4px;
+    border: 0.5px solid var(--gold-border);
+  }
+  .hero-img-badge {
+    position: absolute; bottom: -18px; left: -18px;
+    background: var(--surface2);
+    border: 0.5px solid var(--white-line);
+    padding: 14px 20px; border-radius: 4px;
+  }
+  .badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: var(--gold); line-height: 1;
+  }
+  .badge-text { font-size: 11px; color: var(--cream-dim); letter-spacing: 0.06em; }
+
+  .hero-stats {
+    position: absolute; right: -24px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .stat-pill {
+    background: var(--surface2);
+    border: 0.5px solid var(--white-line);
+    padding: 10px 16px; border-radius: 2px;
+    text-align: center; min-width: 80px;
+  }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); }
+  .stat-lbl { font-size: 10px; color: var(--cream-dim); letter-spacing: 0.06em; }
+
+  /* ABOUT */
+  .about {
+    padding: 120px 48px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    border-top: 0.5px solid var(--white-line);
+    position: relative;
+  }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px); line-height: 1.1;
+    font-weight: 600; color: var(--cream); margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .about-text { color: var(--cream-dim); font-size: 15px; line-height: 1.85; margin-bottom: 32px; }
+  .about-phone {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 20px; color: var(--cream); text-decoration: none;
+    font-family: 'Playfair Display', serif; font-weight: 600;
+    transition: color 0.2s;
+  }
+  .about-phone:hover { color: var(--gold); }
+  .about-phone span {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--gold-dim); border: 0.5px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .about-visual { position: relative; }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-wrap img {
+    width: 100%; height: 500px; object-fit: cover;
+    border-radius: 4px; filter: grayscale(20%);
+  }
+  .about-img-deco {
+    position: absolute; top: 24px; left: 24px;
+    width: calc(100% - 24px); height: calc(100% - 24px);
+    border: 0.5px solid var(--gold-border); border-radius: 4px;
+    pointer-events: none; z-index: -1;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 120px 48px;
+    background: var(--surface);
+    border-top: 0.5px solid var(--white-line);
+  }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .services-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px); color: var(--cream);
+    font-weight: 600; letter-spacing: -0.01em; line-height: 1.1;
+  }
+  .services-sub { color: var(--cream-dim); font-size: 14px; max-width: 280px; text-align: right; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--white-line);
+    border: 0.5px solid var(--white-line);
+  }
+  .service-card {
+    background: var(--surface);
+    padding: 40px 32px;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover { background: var(--surface2); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px; color: var(--gold);
+    letter-spacing: 0.1em; margin-bottom: 24px; display: block;
+  }
+  .service-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .service-name {
+    font-size: 15px; font-weight: 500; color: var(--cream);
+    margin-bottom: 10px; line-height: 1.3;
+  }
+  .service-desc { font-size: 13px; color: var(--cream-dim); line-height: 1.7; }
+
+  /* GALLERY */
+  .gallery {
+    padding: 120px 48px;
+    border-top: 0.5px solid var(--white-line);
+  }
+  .gallery-header { text-align: center; margin-bottom: 64px; }
+  .gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px); color: var(--cream);
+    font-weight: 600; letter-spacing: -0.01em;
+  }
+  .gallery-sub { color: var(--cream-dim); font-size: 14px; margin-top: 12px; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+  .gallery-item {
+    overflow: hidden; border-radius: 4px;
+    position: relative;
+    border: 0.5px solid var(--white-line);
+  }
+  .gallery-item:first-child { grid-column: span 2; }
+  .gallery-item img {
+    width: 100%; height: 280px; object-fit: cover;
+    display: block; filter: grayscale(15%);
+    transition: transform 0.6s ease, filter 0.4s;
+  }
+  .gallery-item:first-child img { height: 360px; }
+  .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 20px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-caption { font-size: 13px; color: var(--cream); letter-spacing: 0.04em; }
+
+  /* CONTACTS */
+  .contacts {
+    padding: 120px 48px;
+    background: var(--surface);
+    border-top: 0.5px solid var(--white-line);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .contacts-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px); color: var(--cream);
+    font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 40px;
+  }
+  .contact-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 24px 0; border-bottom: 0.5px solid var(--white-line);
+  }
+  .contact-item:first-of-type { border-top: 0.5px solid var(--white-line); }
+  .contact-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--gold-dim); border: 0.5px solid var(--gold-border);
+    border-radius: 2px; display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .contact-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .contact-val { font-size: 15px; color: var(--cream); font-weight: 400; text-decoration: none; transition: color 0.2s; }
+  .contact-val:hover { color: var(--gold); }
+
+  .hours-block {
+    background: var(--surface2);
+    border: 0.5px solid var(--white-line);
+    border-radius: 4px; padding: 36px; align-self: start;
+  }
+  .hours-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--cream); margin-bottom: 28px; font-weight: 600;
+  }
+  .hours-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 0.5px solid var(--white-line);
+  }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-days { font-size: 13px; color: var(--cream-dim); }
+  .hours-time { font-size: 13px; color: var(--cream); font-weight: 500; }
+  .hours-closed { color: var(--bronze); }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    border-top: 0.5px solid var(--white-line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--cream-dim);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy { font-size: 12px; color: var(--bronze); letter-spacing: 0.04em; }
+
+  /* DIVIDER LINE */
+  .gold-line {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+    .hero-visual { display: none; }
+    .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    .about-visual { display: none; }
+    .services { padding: 80px 24px; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .services-sub { text-align: left; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .gallery { padding: 80px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: span 2; }
+    .contacts { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
 </head>
-
 <body>
-  <include src="./partials/header-new.html"></include>
-  <main>
-    <include src="./partials/hero-new.html"></include>
-    <include src="./partials/about-us.html"></include>
-    <include src="./partials/services.html"></include>
-    <include src="./partials/portfolio.html"></include>
-  </main>
-  <include src="./partials/footer.html"></include>
-  <script src="./js/aos.js"></script>
-  <script src="./js/index.js"></script>
-  <script src="./js/menu.js"></script>
-  <script src="./js/siema.js"></script>
-  
-</body>
 
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Photo<span>print</span></a>
+  <ul class="nav-links">
+    <li><a href="#about-us">Про нас</a></li>
+    <li><a href="#services">Послуги</a></li>
+    <li><a href="#gallery">Роботи</a></li>
+    <li><a href="#contacts">Контакти</a></li>
+  </ul>
+  <a href="tel:+380973368373" class="nav-phone">+38 097 336 83 73</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Photo printing · Stationery · baguette workshop</div>
+    <h1 class="hero-title">Фото<br><em>на документи</em></h1>
+    <p class="hero-desc">Швидкий друк в будь-яких об'ємах.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Наші послуги</a>
+      <a href="tel:+380973368373" class="btn-outline">Зателефонувати</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-frame">
+      <img src="https://fotoprint.netlify.app/foto433.276fa2c0.png" alt="Photoprint" onerror="this.style.background='#1f1f1f';this.style.minHeight='420px'">
+      <div class="hero-img-overlay"></div>
+      <div class="hero-img-badge">
+        <div class="badge-num">20+</div>
+        <div class="badge-text">РОКІВ ДОСВІДУ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about-us">
+  <div class="reveal">
+    <div class="section-label">Про нас</div>
+    <h2 class="about-title">Фотоцентр,<br>якому довіряють</h2>
+    <p class="about-text">Ми працюємо більше 20 років і знаємо, що кожне фото — це пам'ять. Швидко, якісно, з уважним ставленням до кожного клієнта.</p>
+    <p class="about-text">Якщо тобі потрібен якісний і швидкий друк — тобі точно до нас. Приємні ціни та сучасне обладнання.</p>
+    <a href="tel:+380973368373" class="about-phone">
+      <span>📞</span> +38 097 336 83 73
+    </a>
+  </div>
+  <div class="about-visual reveal reveal-delay-2">
+    <div class="about-img-wrap">
+      <img src="https://fotoprint.netlify.app/fotodoc3.f40e8224.png" alt="Фото на документи" onerror="this.src='';this.style.background='#1f1f1f';this.style.minHeight='500px'">
+      <div class="about-img-deco"></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label">Послуги</div>
+      <h2 class="services-title">Перелік<br>послуг</h2>
+    </div>
+    <p class="services-sub">Все що потрібно для якісного друку і оформлення</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <span class="service-icon">📄</span>
+      <div class="service-name">Фото на документи</div>
+      <p class="service-desc">Якісні фото для паспорта, ID, закордонного — за 10 хвилин.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-num">02</span>
+      <span class="service-icon">🖼</span>
+      <div class="service-name">Друк фотографій</div>
+      <p class="service-desc">Різні формати від А6 до А3. Яскраві кольори, стійке зображення.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-num">03</span>
+      <span class="service-icon">📋</span>
+      <div class="service-name">Ксерокопіювання та друк</div>
+      <p class="service-desc">Швидке копіювання документів. Чорно-білий та кольоровий друк.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-num">04</span>
+      <span class="service-icon">📂</span>
+      <div class="service-name">Ламінування</div>
+      <p class="service-desc">Захист важливих документів. Різні розміри.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">05</span>
+      <span class="service-icon">📡</span>
+      <div class="service-name">Сканування</div>
+      <p class="service-desc">Оцифрування документів, фотографій та інших матеріалів.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-num">06</span>
+      <span class="service-icon">📎</span>
+      <div class="service-name">Прошивка документів</div>
+      <p class="service-desc">Акуратна прошивка та оформлення пакетів документів.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-num">07</span>
+      <span class="service-icon">🎨</span>
+      <div class="service-name">Оформлення в багети</div>
+      <p class="service-desc">Картини, вишивки, постери — красиве оформлення на будь-який смак.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-num">08</span>
+      <span class="service-icon">☕</span>
+      <div class="service-name">Друк на сувенірах</div>
+      <p class="service-desc">Чашки, холсти, футболки з вашим фото або дизайном.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header reveal">
+    <div class="section-label" style="justify-content:center">Портфоліо</div>
+    <h2 class="gallery-title">Наші роботи</h2>
+    <p class="gallery-sub">Приклади того, що ми робимо щодня</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="https://fotoprint.netlify.app/fotodoc1.5a29bb48.jpg" alt="Фото на документи" onerror="this.style.background='#1a1a1a'">
+      <div class="gallery-overlay"><span class="gallery-caption">Фото на документи</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="https://fotoprint.netlify.app/holst2.e70942da.jpg" alt="Холст" onerror="this.style.background='#1a1a1a'">
+      <div class="gallery-overlay"><span class="gallery-caption">Друк на холстах</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="https://fotoprint.netlify.app/proshivka1.e74f7885.jpg" alt="Прошивка" onerror="this.style.background='#1a1a1a'">
+      <div class="gallery-overlay"><span class="gallery-caption">Прошивка документів</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="https://fotoprint.netlify.app/baget3.09c17aad.jpg" alt="Багети" onerror="this.style.background='#1a1a1a'">
+      <div class="gallery-overlay"><span class="gallery-caption">Оформлення в багети</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="https://fotoprint.netlify.app/cup1.cc194bb6.jpg" alt="Чашки" onerror="this.style.background='#1a1a1a'">
+      <div class="gallery-overlay"><span class="gallery-caption">Друк на чашках</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <img src="https://fotoprint.netlify.app/t-shirts.42b3e84a.png" alt="Футболки" onerror="this.style.background='#1a1a1a'">
+      <div class="gallery-overlay"><span class="gallery-caption">Друк на футболках</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div class="reveal">
+    <div class="section-label">Контакти</div>
+    <h2 class="contacts-title">Знайдіть нас<br>в Києві</h2>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <div class="contact-label">Адреса</div>
+        <a href="https://www.google.com/maps/place/вул.Васильківська,+4" class="contact-val" target="_blank">вул. Васильківська, 4, Київ (м. Голосіївська)</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📞</div>
+      <div>
+        <div class="contact-label">Телефон</div>
+        <a href="tel:+380973368373" class="contact-val">+38 097 336 83 73</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <div class="contact-label">Email</div>
+        <a href="mailto:printfotico@gmail.com" class="contact-val">printfotico@gmail.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="hours-block reveal reveal-delay-2">
+    <h3 class="hours-title">Години роботи</h3>
+    <div class="hours-row">
+      <span class="hours-days">Понеділок — Четвер</span>
+      <span class="hours-time">09:00 — 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-days">П'ятниця</span>
+      <span class="hours-time">09:00 — 17:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-days">Субота — Неділя</span>
+      <span class="hours-time">11:00 — 15:00</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Photo<span>print</span></div>
+  <div class="footer-copy">© 2026 Photoprint. Всі права захищені.</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '6px'; cursor.style.height = '6px'; ring.style.width = '52px'; ring.style.height = '52px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '10px'; cursor.style.height = '10px'; ring.style.width = '36px'; ring.style.height = '36px'; });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
 </html>
